@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
@@ -49,7 +50,7 @@ class _NotesPageState extends State<NotesPage> {
   void _confirmDelete(Note note) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (context) => CupertinoAlertDialog(
         title: const Text('Delete Note'),
         content: const Text('Are you sure you want to delete this note?'),
         actions: [
@@ -93,15 +94,6 @@ class _NotesPageState extends State<NotesPage> {
             ],
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () {},
-            child: const Text(
-              'Edit',
-              style: TextStyle(color: Color.fromRGBO(65, 192, 114, 1)),
-            ),
-          ),
-        ],
       ),
       body: Column(
         children: [

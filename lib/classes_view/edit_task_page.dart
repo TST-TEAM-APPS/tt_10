@@ -46,7 +46,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
         await widget.task.save();
 
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Задача успешно обновлена')),
+          SnackBar(content: Text('Succesfully updated')),
         );
 
         Navigator.pop(context);
@@ -76,7 +76,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
   void _confirmDelete() {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (context) => CupertinoAlertDialog(
         title: const Text('Удалить задачу'),
         content: const Text('Вы уверены, что хотите удалить эту задачу?'),
         actions: [
@@ -225,7 +225,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
               DisplayGradientButton(
                 onPressed: _saveTask,
                 text: Text(
-                  'Сохранить изменения',
+                  'Save changes',
                   style: AppTextStyles.bodyLargeMedium
                       .copyWith(color: Colors.white),
                 ),

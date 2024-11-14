@@ -86,7 +86,7 @@ class _ClassesPageState extends State<ClassesPage> {
         child: ChoiceChip(
           showCheckmark: false,
           side: const BorderSide(style: BorderStyle.none),
-          label: const Text('Все'),
+          label: const Text('All'),
           selected: _selectedSubject == null,
           onSelected: (selected) {
             setState(() {

@@ -104,7 +104,7 @@ class _HomeworksPageState extends State<HomeworksPage> {
     // Подтверждение удаления (опционально)
     bool? confirm = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (context) => CupertinoAlertDialog(
         title: const Text('Delete Homework'),
         content: const Text('Are you sure'),
         actions: [
