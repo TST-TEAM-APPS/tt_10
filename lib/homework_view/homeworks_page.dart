@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_down_button/pull_down_button.dart';
+import 'package:tt_10_artur/homework_view/edit_homework_page.dart';
 import '../data/homework.dart';
 import 'add_homework_page.dart';
 import 'open_homework_page.dart';
@@ -22,7 +25,7 @@ class _HomeworksPageState extends State<HomeworksPage> {
   void initState() {
     super.initState();
     homeworkBox =
-        Hive.box<Homework>('homeworks'); // Ensure the box name matches
+        Hive.box<Homework>('homeworks'); // Убедитесь, что имя бокса совпадает
   }
 
   List<Homework> _getFilteredHomeworks() {
@@ -74,7 +77,7 @@ class _HomeworksPageState extends State<HomeworksPage> {
         builder: (context) => const AddHomeworkPage(),
       ),
     );
-    setState(() {}); // Refresh the state upon return
+    setState(() {}); // Обновляем состояние при возврате
   }
 
   void _navigateToOpenHomework(Homework hw) {
@@ -87,14 +90,43 @@ class _HomeworksPageState extends State<HomeworksPage> {
   }
 
   void _navigateToEditHomework(Homework hw) {
-    // Implement navigation to edit homework page if exists
-    // For example:
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => EditHomeworkPage(homework: hw),
-    //   ),
-    // );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditHomeworkPage(homework: hw),
+      ),
+    ).then((_) {
+      setState(() {}); // Обновляем состояние после редактирования
+    });
+  }
+
+  void _deleteHomework(Homework hw) async {
+    // Подтверждение удаления (опционально)
+    bool? confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Homework'),
+        content: const Text('Are you sure'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      await hw.delete(); // Удаляем из Hive
+      setState(() {}); // Обновляем состояние
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Succesfully deleted')),
+      );
+    }
   }
 
   @override
@@ -113,10 +145,8 @@ class _HomeworksPageState extends State<HomeworksPage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            // Status Filters
+            const SizedBox(height: 20),
+            // Фильтры статусов
             SizedBox(
               height: 50,
               child: ListView(
@@ -126,7 +156,7 @@ class _HomeworksPageState extends State<HomeworksPage> {
               ),
             ),
             const SizedBox(height: 16),
-            // Homework List or Empty Message
+            // Список домашних заданий или сообщение об отсутствии
             Expanded(
               child: homeworks.isNotEmpty
                   ? ListView.builder(
@@ -137,6 +167,8 @@ class _HomeworksPageState extends State<HomeworksPage> {
                           homework: hw,
                           onTap: () => _navigateToOpenHomework(hw),
                           onEdit: () => _navigateToEditHomework(hw),
+                          onDelete: () =>
+                              _deleteHomework(hw), // Передаём callback удаления
                         );
                       },
                     )
@@ -150,7 +182,7 @@ class _HomeworksPageState extends State<HomeworksPage> {
                       ),
                     ),
             ),
-            // Add Homework Button
+            // Кнопка добавления домашнего задания
             DisplayGradientButton(
               onPressed: _navigateToAddHomework,
               text: Text(
@@ -159,9 +191,7 @@ class _HomeworksPageState extends State<HomeworksPage> {
                     AppTextStyles.bodyLargeMedium.copyWith(color: Colors.white),
               ),
             ),
-            SizedBox(
-              height: 100,
-            )
+            const SizedBox(height: 100),
           ],
         ),
       ),
@@ -173,12 +203,14 @@ class HomeworkCard extends StatelessWidget {
   final Homework homework;
   final VoidCallback onTap;
   final VoidCallback onEdit;
+  final VoidCallback onDelete; // Добавляем callback для удаления
 
   const HomeworkCard({
     Key? key,
     required this.homework,
     required this.onTap,
     required this.onEdit,
+    required this.onDelete, // Обязательный параметр
   }) : super(key: key);
 
   Color _getStatusColor(String status) {
@@ -204,14 +236,13 @@ class HomeworkCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Container(
           decoration: BoxDecoration(
-            color: const Color.fromRGBO(
-                72, 80, 100, 0.08), // Light background color
+            color: const Color.fromRGBO(72, 80, 100, 0.08), // Светлый фон
             borderRadius: BorderRadius.circular(12.0),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Homework Title and Edit Button
+              // Заголовок домашнего задания и меню
               Padding(
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Row(
@@ -219,10 +250,8 @@ class HomeworkCard extends StatelessWidget {
                     Expanded(
                       child: Row(
                         children: [
-                          Icon(Icons.school),
-                          SizedBox(
-                            width: 10,
-                          ),
+                          const Icon(Icons.school),
+                          const SizedBox(width: 10),
                           Text(
                             homework.topic,
                             style: AppTextStyles.bodyLargeMedium.copyWith(
@@ -232,7 +261,7 @@ class HomeworkCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // Homework Status
+                    // Статус домашнего задания
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8.0, vertical: 4.0),
@@ -248,25 +277,36 @@ class HomeworkCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.more_vert),
-                      onPressed: onEdit,
-                    ),
+                    // Выпадающее меню
+
+                    PullDownButton(
+                        itemBuilder: (context) => [
+                              PullDownMenuItem(onTap: onEdit, title: 'Edit'),
+                              PullDownMenuItem(onTap: onDelete, title: 'Delete')
+                            ],
+                        buttonBuilder: (context, showMenu) => CupertinoButton(
+                              onPressed: showMenu,
+                              padding: EdgeInsets.zero,
+                              child: Icon(
+                                Icons.more_vert,
+                                color: Colors.black,
+                              ),
+                            ))
                   ],
                 ),
               ),
               const SizedBox(height: 8),
-              // Homework Description and Date
+              // Описание и дата домашнего задания
               Container(
                 padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                  color: Colors.white, // White background color
+                  color: Colors.white, // Белый фон
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Homework Description
+                    // Описание домашнего задания
                     Text(
                       homework.description.length > 100
                           ? '${homework.description.substring(0, 100)}...'
@@ -277,7 +317,7 @@ class HomeworkCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 8),
-                    // Homework Date
+                    // Дата домашнего задания
                     Row(
                       children: [
                         const Icon(

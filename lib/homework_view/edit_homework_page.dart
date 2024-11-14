@@ -37,7 +37,7 @@ class _EditHomeworkPageState extends State<EditHomeworkPage> {
   ];
 
   // Define the list of statuses
-  final List<String> _statuses = ['Planned', 'In Progress', 'Completed'];
+  final List<String> _statuses = ['Planned', 'In work', 'Finished'];
 
   @override
   void initState() {
@@ -136,12 +136,6 @@ class _EditHomeworkPageState extends State<EditHomeworkPage> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.green),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text(
-          'Edit Homework',
-          style: AppTextStyles.bodyLargeMedium.copyWith(color: Colors.black87),
-        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -309,36 +303,35 @@ class _EditHomeworkPageState extends State<EditHomeworkPage> {
                 ),
               ),
               const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0, vertical: 12.0),
-                decoration: BoxDecoration(
-                  color: Colors.blue[50],
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                child: DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                    labelText: 'Select Status',
-                    border: InputBorder.none,
+              PullDownButton(
+                itemBuilder: (context) => _statuses.map((status) {
+                  return PullDownMenuItem(
+                    title: status,
+                    onTap: () {
+                      setState(() {
+                        _selectedStatus = status;
+                      });
+                    },
+                  );
+                }).toList(),
+                buttonBuilder: (context, showMenu) => CupertinoButton(
+                  onPressed: showMenu,
+                  padding: EdgeInsets.zero,
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 10.0),
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(28, 72, 80, 100),
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    child: Text(
+                      _selectedStatus!,
+                      style: AppTextStyles.bodyLargeMedium.copyWith(
+                        color: const Color.fromARGB(255, 49, 55, 68),
+                      ),
+                    ),
                   ),
-                  value: _selectedStatus,
-                  items: _statuses.map((status) {
-                    return DropdownMenuItem(
-                      value: status,
-                      child: Text(status),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedStatus = value;
-                    });
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please select a status';
-                    }
-                    return null;
-                  },
                 ),
               ),
               const SizedBox(height: 32),

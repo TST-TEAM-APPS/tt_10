@@ -100,9 +100,7 @@ class _AddNotePageState extends State<AddNotePage> {
               const SizedBox(height: 8),
               TextFormField(
                 controller: _contentController,
-                decoration: inputDecoration.copyWith(
-                  labelText: 'Enter your note here',
-                ),
+                decoration: inputDecoration.copyWith(),
                 maxLines: 5,
                 validator: (value) {
                   if (value == null || value.isEmpty) {

@@ -150,39 +150,6 @@ class _EditLessonPageState extends State<EditLessonPage> {
     );
   }
 
-  void _confirmDelete() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Delete Lesson'),
-        content: const Text('Are you sure you want to delete this lesson?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () async {
-              Navigator.pop(context);
-              try {
-                await widget.lesson.delete();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Lesson deleted successfully')),
-                );
-                Navigator.pop(context); // Exit the EditLessonPage
-              } catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Error deleting lesson: $e')),
-                );
-              }
-            },
-            child: const Text('Delete', style: TextStyle(color: Colors.red)),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     // Определяем общий стиль для полей ввода
@@ -202,13 +169,6 @@ class _EditLessonPageState extends State<EditLessonPage> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.green),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: _confirmDelete,
-            tooltip: 'Delete Lesson',
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
