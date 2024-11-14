@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tt_10_artur/classes_view/classes_page.dart';
-import 'package:tt_10_artur/homework_view/homeworks_page.dart';
-import 'package:tt_10_artur/settings_view/settings_page.dart';
+import 'package:all_day_lesson_planner/classes_view/classes_page.dart';
+import 'package:all_day_lesson_planner/homework_view/homeworks_page.dart';
+import 'package:all_day_lesson_planner/settings_view/settings_page.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tt_10_artur/data/task.dart';
+import 'package:all_day_lesson_planner/data/task.dart';
 
 class TaskWidget extends StatelessWidget {
   final List<Task> tasks;

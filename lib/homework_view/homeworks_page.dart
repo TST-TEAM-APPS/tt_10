@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:pull_down_button/pull_down_button.dart';
-import 'package:tt_10_artur/homework_view/edit_homework_page.dart';
+import 'package:all_day_lesson_planner/homework_view/edit_homework_page.dart';
 import '../data/homework.dart';
 import 'add_homework_page.dart';
 import 'open_homework_page.dart';
-import 'package:tt_10_artur/styles/text_styles.dart';
-import 'package:tt_10_artur/widgets/display_gradient_button.dart';
+import 'package:all_day_lesson_planner/styles/text_styles.dart';
+import 'package:all_day_lesson_planner/widgets/display_gradient_button.dart';
 
 class HomeworksPage extends StatefulWidget {
   const HomeworksPage({Key? key}) : super(key: key);

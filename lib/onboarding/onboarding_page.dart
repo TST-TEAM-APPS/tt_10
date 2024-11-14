@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tt_10_artur/bottom_navigation_bar/bottom_navigation_bar.dart';
-import 'package:tt_10_artur/widgets/gradient_button.dart';
+import 'package:all_day_lesson_planner/bottom_navigation_bar/bottom_navigation_bar.dart';
+import 'package:all_day_lesson_planner/widgets/gradient_button.dart';
 
 class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
+
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
@@ -70,7 +72,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           onPressed: () {
             if (_currentIndex < _pageData.length - 1) {
               _controller.nextPage(
-                duration: Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
               );
             } else {
@@ -94,7 +96,7 @@ class OnboardingPage extends StatelessWidget {
   final int currentIndex;
   final int totalPageCount;
 
-  const OnboardingPage({
+  const OnboardingPage({super.key, 
     required this.title,
     required this.subtitle,
     required this.imagePath,
@@ -110,33 +112,33 @@ class OnboardingPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Spacer(flex: 2),
+          const Spacer(flex: 2),
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.bold,
-              color: const Color.fromARGB(255, 72, 80, 100),
+              color: Color.fromARGB(255, 72, 80, 100),
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             subtitle,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               color: Colors.grey,
             ),
             textAlign: TextAlign.start,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           // Верхний индикатор страниц
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: List.generate(
               totalPageCount,
               (index) => Container(
-                margin: EdgeInsets.symmetric(horizontal: 4),
+                margin: const EdgeInsets.symmetric(horizontal: 4),
                 height: 7,
                 width: index == currentIndex ? 37 : 24,
                 decoration: BoxDecoration(
@@ -147,14 +149,14 @@ class OnboardingPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 90),
+          const SizedBox(height: 90),
           Center(
             child: Image.asset(
               imagePath,
               height: 200,
             ),
           ),
-          Spacer(flex: 3),
+          const Spacer(flex: 3),
         ],
       ),
     );

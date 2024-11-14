@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:hive/hive.dart';
-import 'package:tt_10_artur/data/lesson.dart';
-import 'package:tt_10_artur/data/task.dart';
-import 'package:tt_10_artur/styles/text_styles.dart';
-import 'package:tt_10_artur/widgets/display_gradient_button.dart';
+import 'package:all_day_lesson_planner/data/lesson.dart';
+import 'package:all_day_lesson_planner/data/task.dart';
+import 'package:all_day_lesson_planner/styles/text_styles.dart';
+import 'package:all_day_lesson_planner/widgets/display_gradient_button.dart';
 
 class AddTaskPage extends StatefulWidget {
   final Lesson lesson;

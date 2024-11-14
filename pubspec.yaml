@@ -1,4 +1,4 @@
-name: tt_10_artur
+name: all_day_lesson_planner
 description: "A new Flutter project."
 publish_to: 'none'
 version: 1.0.0+1
@@ -26,12 +26,26 @@ dependencies:
   is_first_run: ^1.0.0
   flutter_native_splash: ^2.4.2
   flutter_launcher_icons: ^0.14.1
+  webview_flutter: ^4.10.0
+  webview_flutter_wkwebview: ^3.16.2
+  in_app_review: ^2.0.9
+  custom_progressbar: ^0.0.2
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+
+flutter_native_splash:
+  image: assets/images/icon.png
+  color: '#FFFFFF'
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/images/icon.png"
 
 flutter:
   uses-material-design: true

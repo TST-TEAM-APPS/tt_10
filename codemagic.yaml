@@ -1,0 +1,51 @@
+workflows:
+  ios-workflow:
+    name: iOS Workflow
+    instance_type: mac_mini_m1
+    max_build_duration: 45
+    integrations:
+      app_store_connect: ApikeyPlanner
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.admin.deck.test1.1
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    cache:
+      cache_paths:
+        - $FLUTTER_ROOT/.pub-cache
+        - $HOME/.gradle/caches
+        - $HOME/Library/Caches/CocoaPods
+    scripts:
+      - name: Set up code signing settings on Xcode project
+        script: |
+          xcode-project use-profiles
+      - name: Get Flutter packages
+        script: |
+          flutter pub get
+      - name: Install pods
+        script: |
+          find . -name "Podfile" -execdir pod install \;
+        ignore_failure: true
+      - name: Flutter build ipa and automatic versioning
+        script: |
+          flutter build ipa --release \
+            --export-options-plist=/Users/builder/export_options.plist \
+            --obfuscate --split-debug-info=build/app/outputs/symbols
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - build/app/outputs/symbols/*.symbols
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+    publishing:
+      email:
+        recipients:
+          - denwhite223@gmail.com
+          - vervicowork@gmail.com
+          - kameneckiy228@gmail.com
+        notify:
+          success: true
+          failure: true
+      app_store_connect:
+        auth: integration

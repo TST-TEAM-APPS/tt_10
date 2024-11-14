@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:tt_10_artur/classes_view/add_task_page.dart';
-import 'package:tt_10_artur/classes_view/edit_lesson_page.dart';
-import 'package:tt_10_artur/data/lesson.dart';
-import 'package:tt_10_artur/data/task.dart';
-import 'package:tt_10_artur/styles/text_styles.dart';
-import 'package:tt_10_artur/widgets/display_gradient_button.dart';
+import 'package:all_day_lesson_planner/classes_view/add_task_page.dart';
+import 'package:all_day_lesson_planner/classes_view/edit_lesson_page.dart';
+import 'package:all_day_lesson_planner/data/lesson.dart';
+import 'package:all_day_lesson_planner/data/task.dart';
+import 'package:all_day_lesson_planner/styles/text_styles.dart';
+import 'package:all_day_lesson_planner/widgets/display_gradient_button.dart';
 import 'notes_page.dart';
 import 'edit_task_page.dart';
 

@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pull_down_button/pull_down_button.dart'; // Import PullDownButton
-import 'package:tt_10_artur/data/homework.dart';
-import 'package:tt_10_artur/styles/text_styles.dart';
-import 'package:tt_10_artur/widgets/display_gradient_button.dart';
+import 'package:all_day_lesson_planner/data/homework.dart';
+import 'package:all_day_lesson_planner/styles/text_styles.dart';
+import 'package:all_day_lesson_planner/widgets/display_gradient_button.dart';
 
 class EditHomeworkPage extends StatefulWidget {
   final Homework homework;

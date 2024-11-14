@@ -2,10 +2,10 @@ import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:tt_10_artur/data/lesson.dart';
-import 'package:tt_10_artur/styles/text_styles.dart';
-import 'package:tt_10_artur/widgets/display_gradient_button.dart';
-import 'package:tt_10_artur/widgets/non_activity_widget.dart';
+import 'package:all_day_lesson_planner/data/lesson.dart';
+import 'package:all_day_lesson_planner/styles/text_styles.dart';
+import 'package:all_day_lesson_planner/widgets/display_gradient_button.dart';
+import 'package:all_day_lesson_planner/widgets/non_activity_widget.dart';
 import 'add_lesson_page.dart';
 import 'open_class_page.dart';
 

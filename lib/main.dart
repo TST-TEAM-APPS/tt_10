@@ -1,13 +1,13 @@
+import 'package:all_day_lesson_planner/onboarding/intitial_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:tt_10_artur/data/homework.dart';
-import 'package:tt_10_artur/data/lesson.dart';
-import 'package:tt_10_artur/data/note.dart';
-import 'package:tt_10_artur/data/note_homework.dart';
-import 'package:tt_10_artur/data/task.dart';
-import 'package:tt_10_artur/domain/config.dart';
-import 'package:tt_10_artur/onboarding/onboarding_page.dart';
+import 'package:all_day_lesson_planner/data/homework.dart';
+import 'package:all_day_lesson_planner/data/lesson.dart';
+import 'package:all_day_lesson_planner/data/note.dart';
+import 'package:all_day_lesson_planner/data/note_homework.dart';
+import 'package:all_day_lesson_planner/data/task.dart';
+import 'package:all_day_lesson_planner/domain/config.dart';
 
 void main() async {
   await _initApplication();
@@ -20,6 +20,7 @@ Future<void> _initApplication() async {
   FlutterNativeSplash.preserve(widgetsBinding: bindings);
 
   await Config.instance.init();
+  initLifecycleHandler();
   await Hive.initFlutter();
   Hive.registerAdapter(LessonAdapter());
   Hive.registerAdapter(NoteAdapter());
@@ -45,12 +46,12 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'SFProText',
       ),
-      home: OnboardingScreen(),
+      home: const InitialScreen(),
     );
   }
 }
 
-void initHandler() {
+void initLifecycleHandler() {
   WidgetsBinding.instance.addObserver(
     AppLifecycleListener(onDetach: Config.instance.closeClient),
   );

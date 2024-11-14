@@ -1,7 +1,19 @@
+import 'package:all_day_lesson_planner/domain/config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:in_app_review/in_app_review.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  final _config = Config.instance;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,32 +39,30 @@ class SettingsPage extends StatelessWidget {
                   childAspectRatio: 1,
                   children: [
                     _buildSettingsCard(
-                      icon: Icons.lock,
-                      label: 'Privacy Policy',
-                      onTap: () {
-                        // Add navigation or action
-                      },
-                    ),
+                        icon: Icons.lock,
+                        label: 'Privacy Policy',
+                        onTap: () => launchUrlString(_config.privacyLink)),
                     _buildSettingsCard(
                       icon: Icons.description,
                       label: 'Terms of Use',
-                      onTap: () {
-                        // Add navigation or action
-                      },
+                      onTap: () => launchUrlString(_config.termsLink),
                     ),
                     _buildSettingsCard(
-                      icon: Icons.info,
-                      label: 'Version',
-                      onTap: () {
-                        // Add navigation or action
-                      },
+                      icon: Icons.rate_review,
+                      label: 'Rate us',
+                      onTap: () async =>
+                          await InAppReview.instance.requestReview(),
                     ),
                     _buildSettingsCard(
                       icon: Icons.feedback,
                       label: 'Feedback',
-                      onTap: () {
-                        // Add navigation or action
-                      },
+                      onTap: () async => await FlutterEmailSender.send(
+                        Email(
+                          recipients: ['iqbalbachi255@gmail.com'], 
+                          body: 'You can write your message here...', 
+                          subject: "Message to \"All Day: Lesson Planner\" support"
+                        ),
+                      ),
                     ),
                   ],
                 ),

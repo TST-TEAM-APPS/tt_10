@@ -12,7 +12,7 @@ class Config {
   late final FlagsmithClient _flagsmithClient;
 
   late final String _link;
-  late final bool _useMock;
+  late final bool _usePrivacy;
 
   late final String _privacyLink;
   late final String _termsLink;
@@ -31,7 +31,7 @@ class Config {
             '') as Map<String, dynamic>;
 
     _link = config[ConfigKey.link.name] as String;
-    _useMock = config[ConfigKey.useMock.name] as bool;
+    _usePrivacy = config[ConfigKey.usePrivacy.name] as bool;
     _privacyLink = config[ConfigKey.privacyLink.name] as String;
     _termsLink = config[ConfigKey.termsLink.name] as String;
     return this;
@@ -39,7 +39,7 @@ class Config {
 
   void closeClient() => _flagsmithClient.close();
 
-  bool get usePrivacy => _useMock;
+  bool get usePrivacy => _usePrivacy;
 
   String get link => _link;
 
@@ -47,4 +47,4 @@ class Config {
   String get termsLink => _termsLink;
 }
 
-enum ConfigKey { config, link, useMock, privacyLink, termsLink }
+enum ConfigKey { config, link, usePrivacy, privacyLink, termsLink }
