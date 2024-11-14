@@ -1,21 +1,19 @@
 import 'dart:developer';
 import 'package:custom_progressbar/custom_progressbar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:all_day_lesson_planner/domain/config.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
-void main() => runApp(const MaterialApp(home: PrivacyScreen()));
 
-class PrivacyScreen extends StatefulWidget {
-  const PrivacyScreen({super.key});
+class PrivacyPage extends StatefulWidget {
+  const PrivacyPage({super.key});
 
   @override
-  State<PrivacyScreen> createState() => _PrivacyScreenState();
+  State<PrivacyPage> createState() => _PrivacyPageState();
 }
 
-class _PrivacyScreenState extends State<PrivacyScreen> {
+class _PrivacyPageState extends State<PrivacyPage> {
   late final WebViewController _controller;
   final _config = Config.instance;
 
@@ -37,7 +35,6 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
 
     final link = _config.link;
 
-    // #docregion platform_features
     late final PlatformWebViewControllerCreationParams params;
     if (WebViewPlatform.instance is WebKitWebViewPlatform) {
       params = WebKitWebViewControllerCreationParams(
@@ -50,7 +47,6 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
 
     final WebViewController controller =
         WebViewController.fromPlatformCreationParams(params);
-    // #enddocregion platform_features
 
     controller
       ..setJavaScriptMode(JavaScriptMode.unrestricted)

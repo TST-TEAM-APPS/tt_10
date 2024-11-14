@@ -57,7 +57,7 @@ class _InitialScreenState extends State<InitialScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const PrivacyScreen(),
+            builder: (context) => const PrivacyPage(),
           ),
         );
       }
