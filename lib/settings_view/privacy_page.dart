@@ -2,9 +2,9 @@ import 'dart:developer';
 import 'package:custom_progressbar/custom_progressbar.dart';
 import 'package:flutter/material.dart';
 import 'package:all_day_lesson_planner/domain/config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
-
 
 class PrivacyPage extends StatefulWidget {
   const PrivacyPage({super.key});
@@ -31,9 +31,13 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
   @override
   void initState() {
+    _initializeWebView();
     super.initState();
+  }
 
-    final link = _config.link;
+  Future<void> _initializeWebView() async {
+    // Load last URL or default URL
+    final lastUrl = await _getLastUrl() ?? _config.link;
 
     late final PlatformWebViewControllerCreationParams params;
     if (WebViewPlatform.instance is WebKitWebViewPlatform) {
@@ -62,6 +66,8 @@ class _PrivacyPageState extends State<PrivacyPage> {
           onPageFinished: (String url) {
             controller.runJavaScript(_jsCode);
             log('Page finished loading: $url');
+
+            _saveLastUrl(url);
             setState(() => isLoading = false);
           },
           onWebResourceError: (WebResourceError error) {
@@ -74,15 +80,16 @@ class _PrivacyPageState extends State<PrivacyPage> {
           ''');
           },
           onNavigationRequest: (NavigationRequest request) {
-            log('allowing navigation to ${request.url}');
+            log('Allowing navigation to ${request.url}');
             return NavigationDecision.navigate;
           },
-          onUrlChange: (UrlChange change) {
-            log('url change to ${change.url}');
+          onUrlChange: (UrlChange change) async {
+            log('URL change to ${change.url}');
+            await _saveLastUrl(change.url!); // Save URL on every URL change
           },
         ),
       )
-      ..loadRequest(Uri.parse(link));
+      ..loadRequest(Uri.parse(lastUrl));
 
     if (controller.platform is WebKitWebViewController) {
       (controller.platform as WebKitWebViewController)
@@ -90,6 +97,16 @@ class _PrivacyPageState extends State<PrivacyPage> {
     }
 
     _controller = controller;
+  }
+
+  Future<void> _saveLastUrl(String url) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('lastUrl', url);
+  }
+
+  Future<String?> _getLastUrl() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('lastUrl');
   }
 
   @override
