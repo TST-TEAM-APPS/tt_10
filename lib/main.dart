@@ -41,7 +41,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '1 Xpert education planner',
+      title: '1Xpert education planner',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'SFProText',
